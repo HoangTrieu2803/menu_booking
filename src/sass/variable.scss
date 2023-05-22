@@ -1,0 +1,90 @@
+$blackColor: #000000;
+$darkYellowColor: rgb(203, 175, 84);
+$whiteColor: white;
+$lightDarkColor: #131212;
+$silverColor: #b7b7b7;
+
+@mixin title($color, $fontsize) {
+    color: $color;
+    font-size: $fontsize;
+    margin: 0px;
+}
+@mixin happyMealButton($borderColor) {
+    width: 160px;
+    height: 40px;
+    cursor: pointer;
+    background: $darkYellowColor;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    position: relative;
+    transition: all 1.2s ease-in-out;
+    overflow: hidden;
+    margin-top: 20px;
+    color: $whiteColor;
+    font-weight: 700;
+    box-shadow: 2px 2px 2px 2px $blackColor;
+    &:before {
+        content: "";
+        position: absolute;
+        left: -160px;
+        top: 0;
+        width: 100%;
+        height: 0;
+        border-top: 2px $borderColor solid;
+        transition: all 1s ease-in-out;
+    }
+    &:hover {
+        &::before {
+            left: 0px;
+        }
+        &::after {
+            right: 0px;
+        }
+        background-color: transparent;
+        color: $darkYellowColor;
+        box-shadow: none;
+    }
+    &:after {
+        content: "";
+        position: absolute;
+        right: -160px;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        border-bottom: 2px $borderColor solid;
+        transition: all 1s ease-in-out;
+    }
+    @keyframes border-right {
+        0% {
+            width: 0;
+            height: 0;
+        }
+        100% {
+            width: 0px;
+            height: 40px;
+        }
+    }
+}
+
+@mixin decor {
+    position: relative;
+    &:before {
+        position: absolute;
+        bottom: 0px;
+        left: 60px;
+        content: "";
+        width: 100%;
+        height: 1px;
+        background-color: $silverColor;
+    }
+    &::after {
+        position: absolute;
+        bottom: 0px;
+        right: 60px;
+        content: "";
+        width: 100%;
+        height: 1px;
+        background-color: $silverColor;
+    }
+}

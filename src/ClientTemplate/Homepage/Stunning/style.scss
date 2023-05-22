@@ -1,0 +1,74 @@
+@import "../../../sass/variable.scss";
+
+.stunning {
+    padding: 50px;
+    &-title {
+        text-align: center;
+        h3 {
+            @include title($silverColor, 20px);
+        }
+        h1 {
+            @include title($blackColor, 40px);
+        }
+        span {
+            @include decor;
+        }
+        padding-bottom: 50px;
+    }
+    &-content {
+        justify-content: space-evenly;
+        &-item {
+            position: relative;
+            border: 1px solid $silverColor;
+            max-width: 30% !important;
+            margin-bottom: 30px;
+            padding: 30px;
+            &::after {
+                position: absolute;
+                content: "";
+                top: 0;
+                left: 0;
+                width: 10%;
+                height: 12%;
+                border-top: 0px $darkYellowColor solid;
+                border-left: 0px $darkYellowColor solid;
+                transition: all 0.2s ease-in-out;
+            }
+            &::before {
+                position: absolute;
+                content: "";
+                bottom: 0;
+                right: 0;
+                width: 10%;
+                height: 12%;
+                border-bottom: 0px $darkYellowColor solid;
+                border-right: 0px $darkYellowColor solid;
+                transition: all 0.2 ease-in-out;
+
+            }
+            &:hover {
+                &::before {
+                    border-bottom: 3px $darkYellowColor solid;
+                    border-right: 3px $darkYellowColor solid;
+                }
+                &::after {
+                    border-top: 3px $darkYellowColor solid;
+                    border-left: 3px $darkYellowColor solid;
+                }
+                h3 {
+                    color: $darkYellowColor;
+                }
+            }
+            h3 {
+                padding: 20px 0px 20px 0px;
+                transition: all 0.5 ease-in-out;
+            }
+            p {
+                line-height: 2;
+            }
+            &__icon {
+                font-size: 40px;
+            }
+        }
+    }
+}

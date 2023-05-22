@@ -1,0 +1,12 @@
+@import '../../../sass/variable.scss';
+.myNav{
+    &-content{
+        &-container{
+            background-color: $blackColor;
+            color: $whiteColor;
+            &__link{
+                color: $whiteColor;
+            }
+        }
+    }
+}

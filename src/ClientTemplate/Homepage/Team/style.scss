@@ -1,0 +1,87 @@
+@import '../../../sass/variable.scss';
+
+.team{
+    &-content{
+        padding-bottom: 50px;
+        &-banner{
+            position: relative;
+            background-image: url('../../../../public/img/banner2.jpg');
+            width: 100%;
+            height: 500px;
+            display: flex;
+            &::after{
+                position: absolute;
+                top: 0;
+                left: 0;
+                content: '';
+                background-color: rgba(0, 0, 0, 0.542);
+                width: 100%;
+                height: 100%;
+            }
+            &-title{
+                position: absolute;
+                top: 150px;
+                left: 250px;
+                z-index: 999;
+                h3{
+                    @include title($darkYellowColor, 30px)
+                }
+                h1{
+                    @include title($whiteColor, 60px)
+                }
+            }
+        }
+        &-member{
+            .row{
+                margin: 0 !important;
+            }
+            &-contain{
+                display: flex;
+                justify-content: space-between;
+                max-width: 1200px;
+                margin: auto;
+                &-item{
+                    position: relative;
+                    overflow: hidden;
+                    border-bottom: $darkYellowColor 3px solid;
+                    img{
+                        width: 100%;
+                        height: 500px;
+                    }
+                    &-detail{
+                        position: absolute;
+                        text-align: center;
+                        background-color: rgba(255, 255, 255, 0.83);
+                        border-bottom: $darkYellowColor solid 3px;
+                        width: 100%;
+                        height: 30%;
+                        bottom: -180px;
+                        padding: 30px;
+                        transition: all 0.5s ease-in-out;
+                        &__icon{
+                            color: $darkYellowColor;
+                        }
+                    }
+                    &:hover{
+                        .team-content-member-contain-item-detail{
+                            bottom: 0;
+                        }
+                    }
+                }
+            }
+            &-title{
+                text-align: center;
+                padding: 50px;
+                h3{
+                    @include title($silverColor, 20px)
+                }
+                h1{
+                    @include title($blackColor,40px)
+                }
+                span{
+                    @include decor
+                }
+            }
+        }
+    }
+}

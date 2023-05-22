@@ -1,0 +1,100 @@
+@import '../../sass/variable.scss';
+
+.menu{  
+    .css-heg063-MuiTabs-flexContainer{
+        max-width: 1200px;
+        margin: auto;
+        justify-content: space-evenly !important;
+        padding-top: 50px;
+    }
+    .css-1h9z7r5-MuiButtonBase-root-MuiTab-root.Mui-selected{
+        color: $darkYellowColor !important;
+        outline: $darkYellowColor;
+    }
+    .css-1aquho2-MuiTabs-indicator{
+        background-color: $darkYellowColor !important;
+    }
+    &-banner{
+        position: relative;
+        background-image: url('../../../public/img/banner2.jpg');
+        height: 300px;
+        text-align: center;
+        &::after{
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.637);
+            width: 100%;
+            height: 300px;
+            content: '';
+            left: 0;
+            top: 0;
+        }
+        &-title{
+            position: absolute;
+            margin: auto;
+            h3{
+                @include title($whiteColor, 20px)
+            }
+            h1{
+                @include title($darkYellowColor, 40px)
+            }
+            &__icon{
+                color: $darkYellowColor !important;
+                font-size: 40px;
+            }
+            z-index: 99;
+            top: 80px;
+            left:650px;
+        }
+    }
+    &-content{
+        display: grid;
+        grid-template-columns: repeat(3,1fr);
+        max-width: 1200px;
+        margin: auto;
+        gap: 20px;
+        padding: 50px 0 50px 0;
+        &-item{
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            padding: 0 !important;
+            img{
+                height: 300px;
+                object-fit: cover;
+                width: 100%;
+                transform: scale(1);
+                transition: all 0.5s;
+            }
+            &::after{
+                position: absolute;
+                content: '';
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+            }
+            &-title{
+                position: absolute;
+                bottom: -80px;
+                left: -80px;
+                z-index: 99;
+                color: $whiteColor;
+            }
+            &:hover{
+                &::after{
+                    background-color: rgba(203, 175, 84, 0.785);
+                    transition: all 0.5s;
+                }
+                .menu-content-item-title{
+                    bottom: 0px;
+                    left: 20px;
+                    transition: all 0.5s;
+                }
+                img{
+                    transform: scale(1.2);
+                    transition: all 0.5s;
+                }
+            }
+        }
+    }
+}

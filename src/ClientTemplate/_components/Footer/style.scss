@@ -1,0 +1,63 @@
+@import '../../../sass/variable.scss';
+
+.footer{
+    &-content{
+        text-align:center ;
+        background-color: $lightDarkColor;
+        color: $whiteColor;
+        padding-top: 50px;
+        hr{
+            margin: auto;
+            max-width: 1200px;
+            color: $darkYellowColor;
+        }
+        &-top{
+            display: flex;
+            justify-content: space-around;
+            &-left{
+                position: relative;
+                width: 120px;
+                &__icon{
+                    position: absolute;
+                    top: 15px;
+                    right: -100px ;
+                }
+            }
+            &-center{
+                line-height: 60px;
+            }
+            &-right{
+                position: relative;
+                line-height: 50px;
+                &__input{
+                    padding: 10px;
+                    line-height: 10px;
+                    color: $whiteColor;
+                    background-color: transparent;
+                    border-radius: 5px;
+                    &:focus{
+                        outline: $darkYellowColor 1px solid;
+                    }
+                }
+                &__icon{
+                    cursor: pointer;
+                    position: absolute;
+                    top: 15px;
+                    right: 5px;
+                    color: $darkYellowColor !important;
+                }
+            }   
+        }
+        &-bottom{
+            padding: 50px 0px 50px 0px;
+            display: flex;
+            justify-content: space-around;
+            &-left{
+                text-align: center;
+            }
+            h3{
+                color: $darkYellowColor;
+            }
+        }
+    }
+}

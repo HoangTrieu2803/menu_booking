@@ -1,0 +1,23 @@
+@import "../../../sass/variable.scss";
+
+.carousel {
+    background-image: url("../../../../public/img/carousel.jpg");
+    width: 100%;
+    height: 750px;
+    display: flex;
+    background-position: initial;
+    background-attachment: fixed;
+    &-content {
+        text-align: center;
+        margin: auto;
+        h3 {
+            @include title($darkYellowColor, 40px);
+        }
+        h1 {
+            @include title($whiteColor , 80px);
+        }
+        &__button {
+            @include happyMealButton($whiteColor);
+        }
+    }
+}
