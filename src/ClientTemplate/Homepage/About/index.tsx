@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react'
 import './style.scss'
+import { Link } from 'react-router-dom'
 
 export default function About() : ReactElement {
   return (
@@ -11,7 +12,7 @@ export default function About() : ReactElement {
                 <span className='about-content-left__img'><img src="./img/flower-decor.png" alt="" /></span>
                 <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti
                     atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.</p>
-                <button className='about-content-left__button'>Our Story</button>
+                <Link to={'/'} className='about-content-left__button'>Our Story</Link>
             </div>
             <div className='about-content-right'>
             <img src="./img/home-image-1-2.jpg" alt="" />                  
@@ -27,7 +28,7 @@ export default function About() : ReactElement {
                 <span className='about-content-left__img'><img src="./img/flower-decor.png" alt="" /></span>
                 <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti
                     atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.</p>
-                <button className='about-content-left__button'>View more</button>
+                <Link to={'/'} className='about-content-left__button'>View more</Link>
             </div>
         </div>
         <div className="about-banner row" >
