@@ -9,6 +9,19 @@ $silverColor: #b7b7b7;
     font-size: $fontsize;
     margin: 0px;
 }
+@mixin happyMealBasicButton{
+    background-color: transparent;
+    border: 1px solid $darkYellowColor;
+    color: $darkYellowColor;
+    padding: 10px;
+    border-radius: 5px;
+    transition: all 1s ease-in-out;
+    &:hover{
+        transition: all 1s ease-in-out;
+        background-color: $darkYellowColor;
+        color: $whiteColor;
+    }
+}
 @mixin happyMealButton($borderColor) {
     display: inline-block;
     width: 160px;

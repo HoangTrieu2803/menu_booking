@@ -129,6 +129,9 @@ function Navbar() {
                 Menu
               </Link>
             </Box>
+            <Box sx={{ display: { xl: 'flex', }, justifyContent: 'end' }}>
+              <Link className='myNav-content-container__link nav-link' to={'/login'}>Login</Link>
+            </Box>
           </Toolbar>
         </Container>
       </AppBar>
