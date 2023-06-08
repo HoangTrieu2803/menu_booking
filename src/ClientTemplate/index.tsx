@@ -7,6 +7,7 @@ import OrderPage from './OrderPage'
 import { Route, Routes } from 'react-router-dom'
 import Login from './Login'
 import SignUp from './Signup'
+import WeeklyMenu from './MenuPage/menu'
 
 export default function ClientTemplate(): ReactElement {
   return (
@@ -14,7 +15,7 @@ export default function ClientTemplate(): ReactElement {
         <Navbar />
       <Routes>
         <Route path='/' element={<HomePage />} />
-        <Route path='/menu' element={<MenuPage />} />
+        <Route path='/menu' element={<WeeklyMenu />} />
         <Route path='/order' element={<OrderPage />} />
         <Route path='/login' element={<Login/>} />
         <Route path='/signup' element={<SignUp/>} />
