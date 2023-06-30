@@ -15,7 +15,8 @@ export default function ClientTemplate(): ReactElement {
         <Navbar />
       <Routes>
         <Route path='/' element={<HomePage />} />
-        <Route path='/menu' element={<WeeklyMenu />} />
+        <Route path='/gallery' element={<MenuPage />} />
+        <Route path='/daily' element={<WeeklyMenu />} />
         <Route path='/order' element={<OrderPage />} />
         <Route path='/login' element={<Login/>} />
         <Route path='/signup' element={<SignUp/>} />

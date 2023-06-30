@@ -5,3 +5,10 @@ export type Food = {
     cost: string,
     id : string,
 }
+
+export type Menu = {
+    date: string,
+    breakfast: Food,
+    lunch: Food,
+    dinner: Food
+}

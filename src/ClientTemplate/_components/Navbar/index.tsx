@@ -48,7 +48,7 @@ function Navbar() {
                 textDecoration: 'none',
               }}
             >
-              <Link className='myNav-content-container__link' to='/'>
+              <Link className='myNav-content-container__link nav-link' to='/'>
                 HappyMeal
               </Link>
             </Typography>
@@ -110,7 +110,7 @@ function Navbar() {
               </Menu>
             </Box>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            <Link className='myNav-content-container__link nav-link'
+              <Link className='myNav-content-container__link nav-link'
                 to={`/`}
                 onClick={handleCloseNavMenu}
               >
@@ -122,12 +122,15 @@ function Navbar() {
               >
                 About
               </Link>
-              <Link className='myNav-content-container__link nav-link'
-                to={`/menu`}
+              <span className='myNav-content-container__link nav-link'
                 onClick={handleCloseNavMenu}
               >
                 Menu
-              </Link>
+                <ul className='myNav-content-container__link-dropdown nav-link'>
+                  <li className='myNav-content-container__link-dropdown-item'><Link className='nav-link' style={{color:'white'}} to={'/daily'}>Daily Menu</Link></li>
+                  <li className='myNav-content-container__link-dropdown-item'><Link className='nav-link' style={{color:'white'}} to={'/gallery'}>Gallery Menu</Link></li>
+                </ul>
+              </span>
             </Box>
             <Box sx={{ display: { xl: 'flex', }, justifyContent: 'end' }}>
               <Link className='myNav-content-container__link nav-link' to={'/login'}>Login</Link>

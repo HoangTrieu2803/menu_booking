@@ -4,8 +4,32 @@
         &-container{
             background-color: $blackColor;
             color: $whiteColor;
+            span{
+                cursor: pointer;
+                &:hover{
+                    .myNav-content-container__link-dropdown{
+                        visibility: visible;
+                    }
+                }
+            }
             &__link{
                 color: $whiteColor;
+                position: relative;
+                &-dropdown{
+                    position: absolute;
+                    z-index: 1;
+                    width: 180px;
+                    display: none;
+                    text-align: center;
+                    border: $darkYellowColor 2px solid;
+                    top: 40px;
+                    background-color: $blackColor;
+                    visibility: hidden;
+                    &-item{
+                        list-style: none;
+                        margin-bottom: 20px;
+                    }
+                }
             }
         }
     }

@@ -53,7 +53,7 @@ export default function Login() {
                         </button>
                     </form>
                     <div className="text-center pt-2">
-                        <Link to={"/signup"}>Bạn chưa có tài khoản?</Link>
+                        <Link className='nav-link' to={"/signup"}>Bạn chưa có tài khoản?</Link>
                     </div>
                 </div>
             </div>

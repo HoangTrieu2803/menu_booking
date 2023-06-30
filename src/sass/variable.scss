@@ -4,6 +4,10 @@ $whiteColor: white;
 $lightDarkColor: #131212;
 $silverColor: #b7b7b7;
 
+.nav-link:hover{
+    color: $darkYellowColor !important;
+}
+
 @mixin title($color, $fontsize) {
     color: $color;
     font-size: $fontsize;
