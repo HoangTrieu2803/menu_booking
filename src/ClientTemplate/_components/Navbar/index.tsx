@@ -7,9 +7,9 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import RamenDiningTwoToneIcon from '@mui/icons-material/RamenDiningTwoTone';
+import LogoutIcon from '@mui/icons-material/Logout';
 import { Link } from 'react-router-dom'
 import './style.scss'
 
@@ -25,8 +25,22 @@ function Navbar() {
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
-
-
+  const user = JSON.parse(localStorage.getItem("user") as any);
+  const handleIsLogin = () => {
+    if (!user) {
+      return (
+        <Box sx={{ display: { xl: 'flex', }, justifyContent: 'end' }}>
+          <Link className='myNav-content-container__link nav-link' to={'/login'}>Login</Link>
+        </Box>
+      )
+    } else return (<Box sx={{ display: { xl: 'flex', }, justifyContent: 'end' }}>
+      <span>{user.email}</span>
+      <button style={{ backgroundColor: "transparent", border: "none", color: "red" }} onClick={() => {
+        localStorage.removeItem("user");
+        window.location.reload()
+      }}><LogoutIcon sx={{ display: { xs: 'none', md: 'flex' } }} /></button>
+    </Box>)
+  }
   return (
     <div className='myNav'>
       <AppBar position="static" className='myNav-content'>
@@ -127,14 +141,13 @@ function Navbar() {
               >
                 Menu
                 <ul className='myNav-content-container__link-dropdown nav-link'>
-                  <li className='myNav-content-container__link-dropdown-item'><Link className='nav-link' style={{color:'white'}} to={'/daily'}>Daily Menu</Link></li>
-                  <li className='myNav-content-container__link-dropdown-item'><Link className='nav-link' style={{color:'white'}} to={'/gallery'}>Gallery Menu</Link></li>
+                  <li className='myNav-content-container__link-dropdown-item'><Link className='nav-link' style={{ color: 'white' }} to={'/daily'}>Daily Menu</Link></li>
+                  <li className='myNav-content-container__link-dropdown-item'><Link className='nav-link' style={{ color: 'white' }} to={'/gallery'}>Gallery Menu</Link></li>
+                  <li className='myNav-content-container__link-dropdown-item'><Link className='nav-link' style={{ color: 'white' }} to={user ? '/personal-menu' : '/login'}>Personal Menu</Link></li>
                 </ul>
               </span>
             </Box>
-            <Box sx={{ display: { xl: 'flex', }, justifyContent: 'end' }}>
-              <Link className='myNav-content-container__link nav-link' to={'/login'}>Login</Link>
-            </Box>
+            {handleIsLogin()}
           </Toolbar>
         </Container>
       </AppBar>

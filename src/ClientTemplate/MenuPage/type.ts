@@ -12,3 +12,9 @@ export type Menu = {
     lunch: Food,
     dinner: Food
 }
+
+export type MenuOrder = {
+    menu : Menu[],
+    userId : string,
+    timeStart: Date
+}

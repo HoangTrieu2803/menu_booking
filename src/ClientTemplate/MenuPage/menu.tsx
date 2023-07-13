@@ -9,7 +9,6 @@ import { useAppSelector, useAppDispatch } from '../../redux/store/store';
 import { getDishes } from '../../redux/dishes/dishesSlice';
 import { Menu } from './type';
 
-
 export default function WeeklyMenu() {
 
     const handleFormatDate = (date: Date) => {
@@ -24,17 +23,15 @@ export default function WeeklyMenu() {
     const dispatch = useAppDispatch();
     const lastWeekMenu = JSON.parse(localStorage.getItem('daily1') as any) as Menu[];
     const recentWeekMenu = JSON.parse(localStorage.getItem('daily2') as any) as Menu[];
-    const nextWeekMenu = JSON.parse(localStorage.getItem('daily3') as any) as Menu[];
     const [daily, setDaily] = useState<Menu[]>(recentWeekMenu);
+    
     const foods = useAppSelector((state) => state.foods.data);
     useEffect(() => {
         dispatch(getDishes());
         const nextTwoWeek = handleFormatDate(nextMonday(nextMonday(new Date())))
-        console.log(nextTwoWeek, firstMondayFormat)
         if (firstMondayFormat === nextTwoWeek) {
             localStorage.setItem('daily1', JSON.stringify(recentWeekMenu));
-            localStorage.setItem('daily2', JSON.stringify(nextWeekMenu));
-            localStorage.setItem('daily3', JSON.stringify(randomMenu()));
+            localStorage.setItem('daily2', JSON.stringify(randomFood()));
         }
     }, [])
     
@@ -42,8 +39,6 @@ export default function WeeklyMenu() {
         const firstDayFormat = (handleFormatDate(firstDay))
         if (firstMondayFormat === firstDayFormat) {
             setDaily(recentWeekMenu)
-        } else if (firstMonday < firstDay) {
-            setDaily(nextWeekMenu)
         } else setDaily(lastWeekMenu)
     }, [firstDay])
     const randomFood = () => {
@@ -51,14 +46,14 @@ export default function WeeklyMenu() {
     }
     const randomMenu = () => {
         return [
-            { date: "T2", breakfast: randomFood(), lunch: randomFood(), dinner: randomFood() },
-            { date: "T3", breakfast: randomFood(), lunch: randomFood(), dinner: randomFood() },
-            { date: "T4", breakfast: randomFood(), lunch: randomFood(), dinner: randomFood() },
-            { date: "T5", breakfast: randomFood(), lunch: randomFood(), dinner: randomFood() },
-            { date: "T6", breakfast: randomFood(), lunch: randomFood(), dinner: randomFood() },
+            { date: "T2", breakfast: randomFood(), lunch: randomFood(), dinner: randomFood(), id:"t2" },
+            { date: "T3", breakfast: randomFood(), lunch: randomFood(), dinner: randomFood(),id:"t3" },
+            { date: "T4", breakfast: randomFood(), lunch: randomFood(), dinner: randomFood(),id:"t4" },
+            { date: "T5", breakfast: randomFood(), lunch: randomFood(), dinner: randomFood(), id:"t5" },
+            { date: "T6", breakfast: randomFood(), lunch: randomFood(), dinner: randomFood(), id:"t6" },
         ]
     }
-
+    
     const isLogin = localStorage.getItem('User') ? '/order' : '/login';
 
     const renderMenu = (dailyMenu: Menu[]) => {
@@ -121,7 +116,7 @@ export default function WeeklyMenu() {
                         <span>{handleFormatDate(firstDay)}</span>
                         <ArrowRightAltIcon style={{ fontSize: '20px', fontWeight: 'bold' }} />
                         <span>{handleFormatDate(lastDay)}</span>
-                        <button disabled={firstMonday < firstDay} className='btn btn-success' onClick={() => handleWeek(7)}>Next Week</button>
+                        <button disabled={new Date() < firstDay} className='btn btn-success' onClick={() => handleWeek(7)}>Next Week</button>
                     </div>
                     <div className='weeklyMenu-content-time__right'>
                         <button className='btn btn-danger'>Order Now</button>

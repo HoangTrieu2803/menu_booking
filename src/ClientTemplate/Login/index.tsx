@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import './style.scss'
+import { useAppDispatch } from '../../redux/store/store';
+import { loginUser } from '../../redux/login/loginSlice';
 export default function Login() {
     const [state, setState] = useState({
-        taiKhoan: "",
-        matKhau: "",
+        email: "",
+        password: "",
     });
     const handleOnChange = (e : any) => {
         const { name, value } = e.target;
@@ -13,6 +15,16 @@ export default function Login() {
             [name]: value,
         });
     };
+
+    const dispatch = useAppDispatch();
+
+    const handleLogin = (e : any) =>{
+        e.preventDefault();
+        dispatch(loginUser(state)).then((result)=>{
+            // eslint-disable-next-line no-restricted-globals
+            if(result.payload) return location.replace("/")
+        })
+    }
 
     return (
         <div className="container-fluid backgroundBody pb-5 login" style={{ height: "100vh" }}>
@@ -31,7 +43,7 @@ export default function Login() {
                                 id="exampleInputEmail1"
                                 aria-describedby="emailHelp"
                                 placeholder="Email"
-                                name="taiKhoan"
+                                name="email"
                             />
                         </div>
                         <div className="form-group">
@@ -41,13 +53,14 @@ export default function Login() {
                                 className="form-control"
                                 id="exampleInputPassword1"
                                 placeholder="Mật khẩu"
-                                name="matKhau"
+                                name="password"
                                 onChange={handleOnChange}
                             />
                         </div>
                         <button
                             type="submit"
                             className="login-content__button col-12"
+                            onClick={handleLogin}
                         >
                             Đăng nhập
                         </button>

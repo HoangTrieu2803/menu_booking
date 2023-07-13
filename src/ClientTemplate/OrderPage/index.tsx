@@ -1,23 +1,25 @@
-import React, { ReactElement, useState } from 'react'
+import React, { ReactElement, useEffect, useState } from 'react'
 import './style.scss';
 import { Package } from './type';
 import { Steps } from 'antd';
 import { PieChartOutlined, DollarCircleOutlined, CheckCircleOutlined } from '@ant-design/icons'
 import OrderPaidment from './OrderPaidment';
 import { Link } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../redux/store/store';
+import { getPackage } from '../../redux/package/packageSlice';
 
-const arrPackage = [{ name: 'Package Full', img: 'g1.jpg', cost: 600000, type: '0' },
-{ name: 'Package 1', img: 'g2.jpg', cost: 400000, type: '1' },
-{ name: 'Package 2', img: 'g3.jpg', cost: 400000, type: '2' },
-{ name: 'Package 3', img: 'g4.jpg', cost: 400000, type: '3' }]
 
 export default function OrderPage(): ReactElement {
 
   const [current, setCurrent] = useState(0);
-  const [packageSelected, setPackageSelected] = useState<Package>({ name: '', img: '', cost: 0, type: '' });
-
+  const [packageSelected, setPackageSelected] = useState<Package>({ name: '', img: '', cost: 0, type: '', _id:'' });
+  const packageArr = useAppSelector((state) => state.package.data) as Package[];
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(getPackage());
+  }, [])
   const renderPackage = () => {
-    return arrPackage.map((item: Package) => {
+    return packageArr?.map((item: Package) => {
       return (
         <div className="order-content-item" onClick={() => { handleOnClick(item) }}>
           <img src={`./img/${item.img}`} alt="" />
@@ -50,9 +52,6 @@ export default function OrderPage(): ReactElement {
     return (
       <div className='order-finish'>
         <CheckCircleOutlined className='order-finish__icon' />
-        <p>
-        <Link to={'/#'} className='order-finish__button'>Check your order</Link>
-        </p>
       </div>
     )
   }
@@ -73,7 +72,7 @@ export default function OrderPage(): ReactElement {
 
       <div className='order-step'>
         <Steps className='order-step__line' onChange={setCurrent} current={current} >
-          <Steps.Step title='Package' icon={<PieChartOutlined />} onClick={() => { setPackageSelected({ name: '', img: '', cost: 0, type: '' }) }} />
+          <Steps.Step title='Package' icon={<PieChartOutlined />} onClick={() => { setPackageSelected({ name: '', img: '', cost: 0, type: '' , _id:''}) }} />
           <Steps.Step title='Paidment' icon={<DollarCircleOutlined />} disabled={packageSelected.name === ''} />
           <Steps.Step title='Finish' icon={<CheckCircleOutlined />} disabled={true} />
         </Steps>

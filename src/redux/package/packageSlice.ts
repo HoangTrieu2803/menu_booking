@@ -1,13 +1,13 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { Food } from "../../ClientTemplate/MenuPage/type";
 import api from "../../util/util";
-import {FoodState} from "../type";
+import { Package } from "../../ClientTemplate/OrderPage/type";
+import { PackageState } from "../type";
 
-export const getDishes = createAsyncThunk<Food[]>(
-  "foods/getFoods",
+export const getPackage = createAsyncThunk<Package[]>(
+  "package/getPackage",
   async (_, thunkApi) => {
     try {
-      const data = await api.get("/dish");
+      const data = await api.get("/package");
       return data.data;
     } catch (err:any) {
       return thunkApi.rejectWithValue(err.message);
@@ -19,25 +19,25 @@ const initialState = {
   loading: false,
   data: [],
   error: "",
-} as FoodState;
+} as PackageState;
 
-const dishesSlice = createSlice({
-  name: "foods",
+const packageSlice = createSlice({
+  name: "package",
   initialState,
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(getDishes.pending, (state) => {
+      .addCase(getPackage.pending, (state) => {
         state.loading = true;
       })
-      .addCase(getDishes.fulfilled, (state, action: PayloadAction<Food[]>) => {
+      .addCase(getPackage.fulfilled, (state, action: PayloadAction<Package[]>) => {
         state.loading = false;
         state.data = action.payload;
       })
-      .addCase(getDishes.rejected, (state, action: PayloadAction<any>) => {
+      .addCase(getPackage.rejected, (state, action: PayloadAction<any>) => {
         state.loading = false;
         state.error = action.payload;
       });
   },
 });
-export default dishesSlice.reducer;
+export default packageSlice.reducer;

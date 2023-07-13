@@ -3,6 +3,7 @@ export type Package = {
     img: string,
     cost: number,
     type: string,
+    _id: string
 }
 
 export type Order = {
@@ -10,7 +11,7 @@ export type Order = {
     payMethod: string,
     alleryNote : string,
     addressNote: string,
-    package?: Package,
-    duration: string
+    package?: string,
     timeStart?: Date,
+    userId : string
 }

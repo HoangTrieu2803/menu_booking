@@ -8,6 +8,7 @@ import { Route, Routes } from 'react-router-dom'
 import Login from './Login'
 import SignUp from './Signup'
 import WeeklyMenu from './MenuPage/menu'
+import PersonalMenu from './MenuPage/personal'
 
 export default function ClientTemplate(): ReactElement {
   return (
@@ -20,6 +21,7 @@ export default function ClientTemplate(): ReactElement {
         <Route path='/order' element={<OrderPage />} />
         <Route path='/login' element={<Login/>} />
         <Route path='/signup' element={<SignUp/>} />
+        <Route path='/personal-menu' element={<PersonalMenu/>} />
       </Routes>
         <Footer />
     </div>
