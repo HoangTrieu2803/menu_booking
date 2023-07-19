@@ -11,7 +11,7 @@ export interface FoodState {
 
 export interface MenuState{
     loading : boolean;
-    data: MenuOrder
+    data: MenuOrder[]
     error: string
 }
 

@@ -148,7 +148,7 @@
                 &-col {
                     border-right: 1px solid $silverColor;
                     font-weight: 400;
-                    span {
+                    &__circle {
                         background-color: $darkYellowColor;
                         height: 71px;
                         width: 50% !important;
@@ -164,6 +164,19 @@
             &__btnRandom{
                 text-align: center;
                 margin: 50px;
+            }
+            .overlay-outdate{
+                position: relative;
+                &::after{
+                    position:absolute;
+                    left: 0;
+                    top: 0;
+                    content: '';
+                    height: 100%;
+                    width: 100%;
+                    background-color: rgba(128, 128, 128, 0.734);
+                    border-radius: 5px;
+                }
             }
         }
     }

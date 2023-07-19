@@ -7,7 +7,9 @@ export type Package = {
 }
 
 export type Order = {
-    timeDelivery: string,
+    breakfastDelivery: string,
+    lunchDelivery: string,
+    dinnerDelivery: string,
     payMethod: string,
     alleryNote : string,
     addressNote: string,

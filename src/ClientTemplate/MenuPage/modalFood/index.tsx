@@ -24,7 +24,7 @@ export default function ModalFood(props: { open: boolean, handleClose: any, food
             return (
                 <div className='row modal-body__item' onClick={()=>handleOnClick(item)}>
                     <div className='col-4'>
-                        <img src={`./img/${item.img}`} alt="" />
+                        <img src={`../img/${item.img}`} alt="" />
                     </div>
                     <div className='col-8'>
                         {item.name}

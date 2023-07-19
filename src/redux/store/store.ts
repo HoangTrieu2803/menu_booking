@@ -3,6 +3,7 @@ import dishesSlice from "../dishes/dishesSlice";
 import menuSlice from "../menus/menuSlice";
 import loginSlice from "../login/loginSlice"
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import userSlice from "../user/userSlice";
 import packageSlice from "../package/packageSlice";
 
 export const store = configureStore({
@@ -10,7 +11,8 @@ export const store = configureStore({
     foods: dishesSlice,
     menu: menuSlice,
     package: packageSlice,
-    login : loginSlice
+    login : loginSlice,
+    signup: userSlice
   },
 });
 

@@ -12,40 +12,14 @@ import { getPackage } from '../../redux/package/packageSlice';
 export default function OrderPage(): ReactElement {
 
   const [current, setCurrent] = useState(0);
-  const [packageSelected, setPackageSelected] = useState<Package>({ name: '', img: '', cost: 0, type: '', _id:'' });
   const packageArr = useAppSelector((state) => state.package.data) as Package[];
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(getPackage());
   }, [])
-  const renderPackage = () => {
-    return packageArr?.map((item: Package) => {
-      return (
-        <div className="order-content-item" onClick={() => { handleOnClick(item) }}>
-          <img src={`./img/${item.img}`} alt="" />
-          <div className="order-content-item-detail">
-            <h3>{item.name}</h3>
-            <p>{item.cost}đ</p>
-          </div>
-        </div>
-      )
-    })
-  }
 
-  const handleOnClick = (selected: Package) => {
-    setPackageSelected(selected);
-    setCurrent(current + 1);
-  }
   const handleNextPage = (nextCurrent: number) => {
     setCurrent(current + nextCurrent)
-  }
-
-  const OrderPackage = () => {
-    return (
-      <div className="order-content">
-        {renderPackage()}
-      </div>
-    )
   }
 
   const Finish = () => {
@@ -56,8 +30,7 @@ export default function OrderPage(): ReactElement {
     )
   }
   const order = [
-    <OrderPackage />,
-    <OrderPaidment packageSelected={packageSelected} nextCurrent={handleNextPage} />,
+    <OrderPaidment nextCurrent={handleNextPage} />,
     <Finish />
   ]
 
@@ -72,8 +45,7 @@ export default function OrderPage(): ReactElement {
 
       <div className='order-step'>
         <Steps className='order-step__line' onChange={setCurrent} current={current} >
-          <Steps.Step title='Package' icon={<PieChartOutlined />} onClick={() => { setPackageSelected({ name: '', img: '', cost: 0, type: '' , _id:''}) }} />
-          <Steps.Step title='Paidment' icon={<DollarCircleOutlined />} disabled={packageSelected.name === ''} />
+          <Steps.Step title='Paidment' icon={<DollarCircleOutlined />} />
           <Steps.Step title='Finish' icon={<CheckCircleOutlined />} disabled={true} />
         </Steps>
         {order[current]}

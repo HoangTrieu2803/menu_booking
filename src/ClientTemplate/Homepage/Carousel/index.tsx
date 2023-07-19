@@ -3,7 +3,7 @@ import './style.scss'
 import { Link } from 'react-router-dom'
 
 export default function Carousel(): ReactElement {
-    const isLogin = localStorage.getItem('User') ? '/order' : '/login';
+    const isLogin = localStorage.getItem('user') ? '/personal-menu' : '/login';
 
     return (
         <div className='carousel'>

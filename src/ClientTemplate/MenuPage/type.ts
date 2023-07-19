@@ -16,5 +16,5 @@ export type Menu = {
 export type MenuOrder = {
     menu : Menu[],
     userId : string,
-    timeStart: Date
+    timeStart: string
 }

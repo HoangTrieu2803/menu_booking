@@ -27,7 +27,7 @@ export const getMenu = createAsyncThunk(
 );
 const initialState = {
   loading: false,
-  data: {},
+  data: [],
   error: "",
 } as MenuState;
 
@@ -40,7 +40,7 @@ const menuSlice = createSlice({
       .addCase(postMenu.pending, (state) => {
         state.loading = true;
       })
-      .addCase(postMenu.fulfilled, (state, action: PayloadAction<MenuOrder>) => {
+      .addCase(postMenu.fulfilled, (state, action: PayloadAction<MenuOrder[]>) => {
         state.loading = false;
         state.data = action.payload;
       })
@@ -51,7 +51,7 @@ const menuSlice = createSlice({
       .addCase(getMenu.pending, (state) => {
         state.loading = true;
       })
-      .addCase(getMenu.fulfilled, (state, action: PayloadAction<MenuOrder>) => {
+      .addCase(getMenu.fulfilled, (state, action: PayloadAction<MenuOrder[]>) => {
         state.loading = false;
         state.data = action.payload;
       })

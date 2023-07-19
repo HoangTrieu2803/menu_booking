@@ -37,7 +37,7 @@ function Navbar() {
       <span>{user.email}</span>
       <button style={{ backgroundColor: "transparent", border: "none", color: "red" }} onClick={() => {
         localStorage.removeItem("user");
-        window.location.reload()
+        window.location.replace('/')
       }}><LogoutIcon sx={{ display: { xs: 'none', md: 'flex' } }} /></button>
     </Box>)
   }
@@ -141,7 +141,6 @@ function Navbar() {
               >
                 Menu
                 <ul className='myNav-content-container__link-dropdown nav-link'>
-                  <li className='myNav-content-container__link-dropdown-item'><Link className='nav-link' style={{ color: 'white' }} to={'/daily'}>Daily Menu</Link></li>
                   <li className='myNav-content-container__link-dropdown-item'><Link className='nav-link' style={{ color: 'white' }} to={'/gallery'}>Gallery Menu</Link></li>
                   <li className='myNav-content-container__link-dropdown-item'><Link className='nav-link' style={{ color: 'white' }} to={user ? '/personal-menu' : '/login'}>Personal Menu</Link></li>
                 </ul>

@@ -1,9 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import './style.scss'
 import { useAppDispatch } from '../../redux/store/store';
 import { loginUser } from '../../redux/login/loginSlice';
 export default function Login() {
+    
+    useEffect(()=>{
+        localStorage.getItem('user') && window.location.replace('/');
+    },[])
     const [state, setState] = useState({
         email: "",
         password: "",

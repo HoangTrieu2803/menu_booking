@@ -1,20 +1,36 @@
-import React,{useState} from 'react'
+import React, { useState } from 'react'
+import { postUser } from '../../redux/user/userSlice';
+import { useAppDispatch } from '../../redux/store/store';
 
 export default function SignUp() {
     const [state, setState] = useState({
-        taiKhoan: "",
-        matKhau: "",
-        reMatKhau: "",
+        email: "",
+        password: "",
+        phoneNumber: 0
     });
-    const handleOnChange = (e : any) => {
+    const [rePass, setRePass] = useState('');
+    const handleOnChange = (e: any) => {
         const { name, value } = e.target;
         setState({
             ...state,
             [name]: value,
         });
     };
-  return (
-    <div className="container-fluid backgroundBody pb-5 login" style={{ height: "100vh" }}>
+    const dispatch = useAppDispatch();
+    const handleSignup = (e: any) => {
+        e.preventDefault()
+        console.log(rePass === state.password)
+        if (rePass !== state.password) {
+            alert("mật khẩu chưa trùng khớp")
+        } else {
+            dispatch(postUser(state)).then((result) => {   
+                if (result.payload) return window.location.replace("/login")
+                alert("dang ky thanh cong!")
+            })
+        }
+    }
+    return (
+        <div className="container-fluid backgroundBody pb-5 login" style={{ height: "100vh" }}>
             <div className="container-fluid col-4 mt-4 text-white login-content">
                 <div className="login-content__form py-4 px-4">
                     <h1 className="text-center">
@@ -30,7 +46,8 @@ export default function SignUp() {
                                 id="exampleInputEmail1"
                                 aria-describedby="emailHelp"
                                 placeholder="Email"
-                                name="taiKhoan"
+                                name="email"
+                                required
                             />
                         </div>
                         <div className="form-group">
@@ -40,8 +57,9 @@ export default function SignUp() {
                                 className="form-control"
                                 id="exampleInputPassword1"
                                 placeholder="Mật khẩu"
-                                name="matKhau"
+                                name="password"
                                 onChange={handleOnChange}
+                                required
                             />
                         </div>
                         <div className="form-group">
@@ -52,12 +70,26 @@ export default function SignUp() {
                                 id="exampleInputPassword2"
                                 placeholder="Nhập lại mật khẩu"
                                 name="reMatKhau"
+                                onChange={e => {
+                                    setRePass(e.target.value)
+                                }}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="exampleInputPhoneNumber">Nhập số điện thoại</label>
+                            <input
+                                type="number"
+                                className="form-control"
+                                id="exampleInputPhoneNumber"
+                                placeholder="Nhập số điện thoại"
+                                name="phoneNumber"
                                 onChange={handleOnChange}
                             />
                         </div>
                         <button
                             type="submit"
                             className="login-content__button col-12"
+                            onClick={handleSignup}
                         >
                             Đăng Ký
                         </button>
@@ -65,6 +97,6 @@ export default function SignUp() {
                 </div>
             </div>
         </div>
-  )
+    )
 }
 
