@@ -10,11 +10,13 @@ export type Menu = {
     date: string,
     breakfast: Food,
     lunch: Food,
-    dinner: Food
+    dinner: Food,
 }
 
 export type MenuOrder = {
     menu : Menu[],
     userId : string,
-    timeStart: string
+    timeStart: string,
+    timeOrder: string,
+    _id?: string
 }

@@ -7,17 +7,18 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "jquery/dist/jquery.min.js";
 import "popper.js/dist/umd/popper.min.js";
 import 'bootstrap/dist/js/bootstrap';
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, } from 'react-router-dom'
 import { Provider } from 'react-redux';
 import { store } from './redux/store/store';
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <Provider store={store}>
-      <BrowserRouter>
-        <ClientTemplate />
-      </BrowserRouter>
+    <BrowserRouter>
+      <ClientTemplate />
+    </BrowserRouter>
   </Provider>
 );
 

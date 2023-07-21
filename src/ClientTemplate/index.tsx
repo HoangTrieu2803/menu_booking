@@ -12,7 +12,7 @@ import PersonalMenu from './MenuPage/personal'
 export default function ClientTemplate(): ReactElement {
   return (
     <div>
-        <Navbar />
+      <Navbar />
       <Routes>
         <Route path='/' element={<HomePage />} />
         <Route path='/gallery' element={<MenuPage />} />
@@ -21,7 +21,7 @@ export default function ClientTemplate(): ReactElement {
         <Route path='/signup' element={<SignUp/>} />
         <Route path='/personal-menu' element={<PersonalMenu/>} />
       </Routes>
-        <Footer />
+      <Footer />
     </div>
   )
 }

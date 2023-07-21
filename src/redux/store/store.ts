@@ -5,6 +5,7 @@ import loginSlice from "../login/loginSlice"
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import userSlice from "../user/userSlice";
 import packageSlice from "../package/packageSlice";
+import orderSlice from "../order/orderSlice";
 
 export const store = configureStore({
   reducer: {
@@ -12,7 +13,8 @@ export const store = configureStore({
     menu: menuSlice,
     package: packageSlice,
     login : loginSlice,
-    signup: userSlice
+    signup: userSlice,
+    order : orderSlice
   },
 });
 

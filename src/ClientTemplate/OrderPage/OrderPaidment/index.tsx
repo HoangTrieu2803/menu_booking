@@ -1,17 +1,31 @@
 import { Form } from 'antd'
 import TextArea from 'antd/es/input/TextArea'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Order, Package } from '../type'
-import { useAppDispatch } from '../../../redux/store/store'
+import { useAppDispatch, useAppSelector } from '../../../redux/store/store'
 import { postOrder } from '../../../redux/order/orderSlice'
+import { getMenu } from '../../../redux/menus/menuSlice'
+import { MenuOrder } from '../../MenuPage/type'
+import { lightFormat } from 'date-fns'
+import Paypal from './Paypal'
 
 export default function OrderPaidment(props: { nextCurrent: any }) {
-
+   
     const {nextCurrent } = props;
     const dispatch = useAppDispatch();
     const user = JSON.parse(localStorage.getItem('user') as any)
     const currentDate = new Date();
     const detail = JSON.parse(localStorage.getItem('order') as any);
+    const menuUser = useAppSelector((state) => state.menu.data) as MenuOrder[];
+    const [checkOut,setCheckOut] = useState(false);
+    const [isPaid, setIsPaid] = useState('');
+
+    useEffect(()=>{
+        dispatch(getMenu(user._id));
+    },[])
+    const handleTest = (test:string) =>{
+        setIsPaid(test)
+    }
     
     const [orderValue, setOrderValue] = useState<Order>({
         breakfastDelivery: '7:00 - 7:30',
@@ -21,24 +35,51 @@ export default function OrderPaidment(props: { nextCurrent: any }) {
         alleryNote: '',
         addressNote: '',
         timeStart: currentDate,
-        userId : user._id
+        menuOrder:[] ,
+        cost: detail.total,
+        userId: user._id
     })
 
     const handleOnChange = (e: any) => {
         const { name, value } = e.target;
-        setOrderValue({ ...orderValue, [name]: value })
+        const arr : any =[]
+        const handleFormatDate = (date: Date) => {
+            return lightFormat(date, 'dd-MM');
+        }
+        menuUser?.map((menu: MenuOrder)=>{
+            if(menu.timeOrder === handleFormatDate(currentDate)) arr.push(menu._id);
+        })
+        setOrderValue({ ...orderValue, [name]: value,menuOrder:arr })
     }
+    useEffect(()=>{
+        orderValue.payMethod === 'PAYPAL' ? setCheckOut(true) : setCheckOut(false)
+    },[orderValue.payMethod])
 
+    function numberFormat(number:number) {
+        const decimals =  0;
+        const thousandsSeparator = ',';
+
+        const fixedNumber = number.toFixed(decimals);
+        const parts = fixedNumber.toString().split('.');
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, thousandsSeparator);
+
+        return parts.join(thousandsSeparator);
+    }
     const handleSubmitOrderValue = (e: any) => {
         e.preventDefault();
-        if( orderValue.addressNote && orderValue.alleryNote !== ''){
-            nextCurrent(1);
+        if(orderValue.payMethod === 'COD' && orderValue.addressNote !== '' && orderValue.alleryNote !== ''){
             localStorage.removeItem('order');
-            dispatch(postOrder(orderValue))
+            dispatch(postOrder(orderValue));
+            nextCurrent(1)
         }
     }
-
-
+    useEffect(()=>{
+        if(isPaid === 'success'&& orderValue.addressNote && orderValue.alleryNote !== '' ){
+            localStorage.removeItem('order');
+            dispatch(postOrder(orderValue));
+            nextCurrent(1)
+        }
+    },[isPaid])
     return (
         <div className='order-paidment'>
             <div className="container">
@@ -50,7 +91,7 @@ export default function OrderPaidment(props: { nextCurrent: any }) {
                         <div className="col-md-6">
                             <div className='form-group mt-md-4'>
                                 <div className="order-detail-content">
-                                    <h5>Tổng giá trị thực đơn - {detail.total}đ</h5>
+                                    <h5>Tổng giá trị thực đơn - {numberFormat(detail.total)}đ</h5>
                                 </div>
                             </div>
                             <div className="form-group mt-md-4">
@@ -107,10 +148,13 @@ export default function OrderPaidment(props: { nextCurrent: any }) {
                                         <option value="COD">Thanh toán tiền mặt</option>
                                         <option value="Zalo">Thanh toán bằng Zalo</option>
                                         <option value="MOMO">Thanh toán bằng MOMO</option>
-                                        <option value="BANK TCB">Thanh toán bằng BANK TCB</option>
-                                        <option value="BANK VCB">Thanh toán bằng BANK VCB</option>
+                                        <option value="PAYMENT">Thanh toán bằng PAYMENT</option>
+                                        <option value="PAYPAL">Thanh toán bằng PAYPAL</option>
                                     </select>
                                 </Form.Item>
+                            </div>
+                            <div className="form-group mt-md-4">
+                            {checkOut&& (<Paypal handleTest={handleTest} />)}
                             </div>
                         </div>
                     </div>

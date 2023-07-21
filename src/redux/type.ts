@@ -29,6 +29,6 @@ export interface LoginState{
 
 export interface OrderState{
     loading: boolean;
-    data: Order;
+    data: Order[];
     error : string;
 }

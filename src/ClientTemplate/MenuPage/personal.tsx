@@ -8,7 +8,8 @@ import { useAppSelector, useAppDispatch } from '../../redux/store/store';
 import { getDishes } from '../../redux/dishes/dishesSlice';
 import { Food, Menu, MenuOrder } from './type';
 import ModalFood from './modalFood';
-import { getMenu, postMenu } from '../../redux/menus/menuSlice';
+import { getMenu, postMenu, updateMenu } from '../../redux/menus/menuSlice';
+import { Modal } from '@mui/material'
 
 export default function PersonalMenu() {
 
@@ -26,7 +27,7 @@ export default function PersonalMenu() {
         { date: "T4", breakfast: { name: "...", cost: "", id: "", img: "", type: "1" }, lunch: { name: "...", cost: "", id: "", img: "", type: "2" }, dinner: { name: "...", cost: "", id: "", img: "", type: "3" } },
         { date: "T5", breakfast: { name: "...", cost: "", id: "", img: "", type: "1" }, lunch: { name: "...", cost: "", id: "", img: "", type: "2" }, dinner: { name: "...", cost: "", id: "", img: "", type: "3" } },
         { date: "T6", breakfast: { name: "...", cost: "", id: "", img: "", type: "1" }, lunch: { name: "...", cost: "", id: "", img: "", type: "2" }, dinner: { name: "...", cost: "", id: "", img: "", type: "3" } },
-        ])
+    ])
     const [nextPersonalDaily, setNextPersonalDaily] = useState<Menu[]>(defaultMenu)
     const [recentPersonalDaily, setRecentPersonalDaily1] = useState<Menu[]>(defaultMenu)
 
@@ -34,10 +35,13 @@ export default function PersonalMenu() {
     const [chooseType, setChooseType] = useState<string>('');
     const [open, setOpen] = useState(false);
     const [isDisable, setIsDisable] = useState(false);
-    const handleClose = () => setOpen(false);
+    const [choiceDelete, setChoiceDelete] = useState<boolean>(false);
+    const [modalDeleteOpen, setModalDeleteOpen] = useState(false);
+    const handleClose = () => {setOpen(false); setModalDeleteOpen(false);};
     const foods = useAppSelector((state) => state.foods.data) as Food[];
     const menuUser = useAppSelector((state) => state.menu.data) as MenuOrder[];
     const [nextTotal, setNextToTal] = useState<number>(0);
+    const [menuDelele,setMenuDelele] = useState<any>();
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem("user") as any)
@@ -65,15 +69,16 @@ export default function PersonalMenu() {
         menuUser?.map((weekMenu: MenuOrder) => {
             if (weekMenu.timeStart === handleFormatDate(firstDay)) {
                 setNextPersonalDaily(weekMenu.menu);
+                setMenuDelele(weekMenu)
                 setIsDisable(true)
             }
         })
     }, [menuUser.length])
     useEffect(() => {
         menuUser?.map((weekMenu: MenuOrder) => {
-            if (weekMenu.timeStart === handleFormatDate(firstDay)) setNextPersonalDaily(weekMenu.menu)
-            else if (weekMenu.timeStart !== handleFormatDate(firstDay)) {
-                if (handleFormatDate(firstDay) >= handleFormatDate(firstMonday)) {
+            if (weekMenu.timeStart === handleFormatDate(firstDay)) { setNextPersonalDaily(weekMenu.menu);setMenuDelele(weekMenu) }
+            else if (handleFind() < 1 && weekMenu.timeStart !== handleFormatDate(firstDay)) {
+                if (handleFormatDate(firstMonday) >= handleFormatDate(firstDay)) {
                     setNextPersonalDaily(defaultMenu)
                 }
             }
@@ -104,7 +109,42 @@ export default function PersonalMenu() {
         })
         handleClose();
     }
+    const handleOpenDeleteModal = (date: string, chooseType: string) => {
+        setModalDeleteOpen(true)
+        setChooseId(date)
+        setChooseType(chooseType)
+    }
+    const handleDelele = ()  =>{
+        const deleteFood = { name: "...", cost: "", id: "", img: "", type: chooseType };
+        setNextPersonalDaily(preState => {
+            const newState = preState.map((item) => {
+                if (item.date === chooseId) {
+                    if (chooseType === '2') {
+                        return { ...item, lunch: deleteFood }
+                    } else if (chooseType === '1') {
+                        return { ...item, breakfast: deleteFood }
+                    } else {
+                        return { ...item, dinner: deleteFood }
+                    }
+                }
+                return item;
+            })
+            setMenuDelele({...menuDelele,
+                menu:newState
+            })
+            return preState;
+        })
+        setChoiceDelete(true);
+        handleClose();
+    }
 
+    useEffect(()=>{
+        if(choiceDelete){
+            dispatch(updateMenu(menuDelele))
+            setChoiceDelete(false)
+            window.location.replace('/personal-menu')
+        }
+    },[choiceDelete])
     useEffect(() => {
         let count = 0;
         for (let index = 0; index < nextPersonalDaily.length; index++) {
@@ -124,35 +164,33 @@ export default function PersonalMenu() {
         const nextMenuOrder: MenuOrder = {
             menu: handleFormatDate(firstDay) === handleFormatDate(firstMonday) ? nextPersonalDaily : recentPersonalDaily,
             userId: user._id,
-            timeStart: handleFormatDate(firstMonday)
+            timeStart: handleFormatDate(firstMonday),
+            timeOrder: handleFormatDate(new Date())
         }
         const recentMenuOrder: MenuOrder = {
             menu: handleFormatDate(firstDay) !== handleFormatDate(firstMonday) ? nextPersonalDaily : recentPersonalDaily,
             userId: user._id,
-            timeStart: handleFormatDate(firstDay) === handleFormatDate(firstMonday) ? handleFormatDate(addDays(firstDay, -7)) : handleFormatDate(firstDay)
+            timeStart: handleFormatDate(firstDay) === handleFormatDate(firstMonday) ? handleFormatDate(addDays(firstDay, -7)) : handleFormatDate(firstDay),
+            timeOrder: handleFormatDate(new Date())
         }
 
         const recentMonday = handleFormatDate(addDays(firstMonday, -7));
-        // nextPersonalDaily.map((menu) => {
-        //     if (menu.breakfast.name !== '...' || menu.lunch.name !== '...' || menu.dinner.name !== '...') {
-        //         handleFind(recentMonday) === 0 && dispatch(postMenu(recentMenuOrder));
-        //         dispatch(postMenu(nextMenuOrder))
-        //     }
-        // })
-        if(handleFormatDate(firstMonday) === handleFormatDate(firstDay) && nextPersonalDaily !== defaultMenu){
+
+        if (handleFormatDate(firstMonday) === handleFormatDate(firstDay) && nextPersonalDaily !== defaultMenu) {
             dispatch(postMenu(nextMenuOrder))
-            if(recentPersonalDaily !== defaultMenu){
+            if (recentPersonalDaily !== defaultMenu) {
                 handleFind(recentMonday) === 0 && dispatch(postMenu(recentMenuOrder))
             }
-        }else if(handleFormatDate(firstDay) === recentMonday && nextPersonalDaily !== defaultMenu){
+        } else if (handleFormatDate(firstDay) === recentMonday && nextPersonalDaily !== defaultMenu) {
             handleFind(recentMonday) === 0 && dispatch(postMenu(recentMenuOrder))
-            if(recentPersonalDaily !== defaultMenu){
+            if (recentPersonalDaily !== defaultMenu) {
                 dispatch(postMenu(nextMenuOrder))
             }
         }
         localStorage.setItem('order', JSON.stringify({ total: nextTotal }))
         window.location.replace('/order')
     }
+
     const renderMenu = (dailyMenu: Menu[]) => {
         return menuUser && dailyMenu?.map((menu: Menu, index: number) => {
             return (
@@ -164,6 +202,8 @@ export default function PersonalMenu() {
                         {menu.breakfast.name === '...' ? 'x' : 'Canh rong biển'}
                         <br />
                         {menu.breakfast.cost}
+                        <br />
+                        {menu.breakfast.name === '...' ? '' : <button className='btn btn-danger' style={{display:`${isDisable ? '' : 'none'}`}} onClick={() => handleOpenDeleteModal(menu.date, '1')}>Hủy</button>}
                     </div>
                     <div className='weeklyMenu-content__table-item-col' onClick={() => { handleModalFood(menu.date, '2') }}>
                         <span style={{ color: menu.lunch.name !== '...' ? 'red' : 'white', fontWeight: 'bold' }}>{menu.lunch.name}</span>
@@ -171,6 +211,8 @@ export default function PersonalMenu() {
                         {menu.lunch.name === '...' ? 'x' : 'Canh rong biển'}
                         <br />
                         {menu.lunch.cost}
+                        <br />
+                        {menu.lunch.name === '...' ? '' : <button className='btn btn-danger' style={{display:`${isDisable ? '' : 'none'}`}} onClick={() => handleOpenDeleteModal(menu.date, '2')}>Hủy</button>}
                     </div>
                     <div className='weeklyMenu-content__table-item-col' onClick={() => { handleModalFood(menu.date, '3') }}>
                         <span style={{ color: menu.dinner.name !== '...' ? 'red' : 'white', fontWeight: 'bold' }}>{menu.dinner.name}</span>
@@ -178,6 +220,8 @@ export default function PersonalMenu() {
                         {menu.dinner.name === '...' ? 'x' : 'Canh rong biển'}
                         <br />
                         {menu.dinner.cost}
+                        <br />
+                        {menu.dinner.name === '...' ? '' : <button className='btn btn-danger' style={{display:`${isDisable ? '' : 'none'}`}} onClick={() => handleOpenDeleteModal(menu.date, '3')}>Hủy</button>}
                     </div>
                 </div>
             )
@@ -230,6 +274,18 @@ export default function PersonalMenu() {
                     {renderMenu(nextPersonalDaily)}
                 </div>
             </div>
+            <Modal
+                open={modalDeleteOpen}
+                onClose={handleClose}
+            >
+                <div className='modal-body'>
+                    <h3>Bạn có chắc chắn xóa bữa ăn này không?</h3>
+                    <div className='pagination'>
+                    <button className="btn btn-danger" onClick={()=>setModalDeleteOpen(false)} >No</button>
+                    <button className="btn btn-success" onClick={handleDelele}>Yes</button>
+                    </div>
+                </div>
+            </Modal>
             <ModalFood open={open} handleClose={handleClose} foods={foods} chooseFood={chooseFood} chooseId={chooseId} chooseType={chooseType} />
         </div>
     )

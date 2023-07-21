@@ -1,10 +1,9 @@
 import React, { useState,useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import './style.scss'
-import { useAppDispatch } from '../../redux/store/store';
+import { useAppDispatch, useAppSelector } from '../../redux/store/store';
 import { loginUser } from '../../redux/login/loginSlice';
 export default function Login() {
-    
     useEffect(()=>{
         localStorage.getItem('user') && window.location.replace('/');
     },[])

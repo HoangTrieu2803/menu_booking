@@ -1,9 +1,10 @@
+import { MenuOrder } from "../MenuPage/type"
+
 export type Package = {
     name: string
     img: string,
     cost: number,
     type: string,
-    _id: string
 }
 
 export type Order = {
@@ -15,5 +16,7 @@ export type Order = {
     addressNote: string,
     package?: string,
     timeStart?: Date,
-    userId : string
+    menuOrder: MenuOrder[],
+    cost: number,
+    userId: string
 }
