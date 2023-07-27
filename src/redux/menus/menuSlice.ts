@@ -47,6 +47,18 @@ export const updateMenu = createAsyncThunk(
     }
   }
 );
+
+export const getAllMenu = createAsyncThunk(
+  "menu/getAllMenu",
+  async () => {
+    try {
+      const response = await api.get(`/menu`);
+      return response.data;
+    } catch (err:any) {
+      console.log(err)
+    }
+  }
+);
 const initialState = {
   loading: false,
   data: [],
@@ -100,6 +112,17 @@ const menuSlice = createSlice({
         state.data = action.payload;
       })
       .addCase(getAMenu.rejected, (state, action: PayloadAction<any>) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(getAllMenu.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getAllMenu.fulfilled, (state, action: PayloadAction<MenuOrder[]>) => {
+        state.loading = false;
+        state.data = action.payload;
+      })
+      .addCase(getAllMenu.rejected, (state, action: PayloadAction<any>) => {
         state.loading = false;
         state.error = action.payload;
       })

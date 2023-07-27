@@ -2,8 +2,8 @@ export type Food = {
     name: string,
     img : string,
     type: string,
-    cost: string,
-    id : string,
+    cost: number,
+    _id? : string,
 }
 
 export type Menu = {
@@ -15,7 +15,7 @@ export type Menu = {
 
 export type MenuOrder = {
     menu : Menu[],
-    userId : string,
+    userId : any,
     timeStart: string,
     timeOrder: string,
     _id?: string

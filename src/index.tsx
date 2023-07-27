@@ -10,14 +10,16 @@ import 'bootstrap/dist/js/bootstrap';
 import { BrowserRouter, } from 'react-router-dom'
 import { Provider } from 'react-redux';
 import { store } from './redux/store/store';
+import AdminTemplate from './AdminTemplate';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+const isAdmin = JSON.parse(localStorage.getItem('user') as any);
 root.render(
   <Provider store={store}>
     <BrowserRouter>
-      <ClientTemplate />
+      {isAdmin && isAdmin.admin === true ? <AdminTemplate/> : <ClientTemplate/>}
     </BrowserRouter>
   </Provider>
 );

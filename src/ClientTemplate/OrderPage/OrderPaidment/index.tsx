@@ -8,6 +8,7 @@ import { getMenu } from '../../../redux/menus/menuSlice'
 import { MenuOrder } from '../../MenuPage/type'
 import { lightFormat } from 'date-fns'
 import Paypal from './Paypal'
+import { handleFormatDateStart, numberFormat,  } from '../../../Funtional'
 
 export default function OrderPaidment(props: { nextCurrent: any }) {
    
@@ -43,11 +44,9 @@ export default function OrderPaidment(props: { nextCurrent: any }) {
     const handleOnChange = (e: any) => {
         const { name, value } = e.target;
         const arr : any =[]
-        const handleFormatDate = (date: Date) => {
-            return lightFormat(date, 'dd-MM');
-        }
+
         menuUser?.map((menu: MenuOrder)=>{
-            if(menu.timeOrder === handleFormatDate(currentDate)) arr.push(menu._id);
+            if(menu.timeOrder === handleFormatDateStart(currentDate)) arr.push(menu._id);
         })
         setOrderValue({ ...orderValue, [name]: value,menuOrder:arr })
     }
@@ -55,16 +54,6 @@ export default function OrderPaidment(props: { nextCurrent: any }) {
         orderValue.payMethod === 'PAYPAL' ? setCheckOut(true) : setCheckOut(false)
     },[orderValue.payMethod])
 
-    function numberFormat(number:number) {
-        const decimals =  0;
-        const thousandsSeparator = ',';
-
-        const fixedNumber = number.toFixed(decimals);
-        const parts = fixedNumber.toString().split('.');
-        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, thousandsSeparator);
-
-        return parts.join(thousandsSeparator);
-    }
     const handleSubmitOrderValue = (e: any) => {
         e.preventDefault();
         if(orderValue.payMethod === 'COD' && orderValue.addressNote !== '' && orderValue.alleryNote !== ''){

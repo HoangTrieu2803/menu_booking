@@ -14,7 +14,7 @@ export const store = configureStore({
     package: packageSlice,
     login : loginSlice,
     signup: userSlice,
-    order : orderSlice
+    order : orderSlice,
   },
 });
 

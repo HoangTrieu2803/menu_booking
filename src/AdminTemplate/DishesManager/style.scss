@@ -1,0 +1,27 @@
+@import url('../../sass/variable.scss');
+
+.paginationAdmin{
+    display: flex;
+    list-style: none;
+    justify-content: center !important;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    margin-bottom: 0;
+    &__item{
+        &__link{
+            color: red;
+            background-color: rgba(212, 16, 16, 0.167);
+            padding: 10px 20px;
+            margin-top: 10px;
+            &:hover{
+                color: white;
+                text-decoration: none;
+            }
+        }
+        &--active{
+            color: red;
+            background-color: white;
+            padding: 10px 20px;
+        }
+    }
+}

@@ -6,7 +6,8 @@ export default function SignUp() {
     const [state, setState] = useState({
         email: "",
         password: "",
-        phoneNumber: 0
+        phoneNumber: 0,
+        userName: ''
     });
     const [rePass, setRePass] = useState('');
     const handleOnChange = (e: any) => {
@@ -19,7 +20,6 @@ export default function SignUp() {
     const dispatch = useAppDispatch();
     const handleSignup = (e: any) => {
         e.preventDefault()
-        console.log(rePass === state.password)
         if (rePass !== state.password) {
             alert("mật khẩu chưa trùng khớp")
         } else {
@@ -47,6 +47,19 @@ export default function SignUp() {
                                 aria-describedby="emailHelp"
                                 placeholder="Email"
                                 name="email"
+                                required
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="userName">Tên người dùng</label>
+                            <input
+                                onChange={handleOnChange}
+                                type="text"
+                                className="form-control"
+                                id="userName"
+                                aria-describedby="emailHelp"
+                                placeholder="Tên người dùng"
+                                name="userName"
                                 required
                             />
                         </div>
