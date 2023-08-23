@@ -32,7 +32,7 @@ export default function DishModal(props: { modalOpen: boolean, modalClose: any, 
             dispatch(addDish(food))
         }
 
-        window.location.replace('/')
+        // window.location.replace('/')
     }
 
     return (

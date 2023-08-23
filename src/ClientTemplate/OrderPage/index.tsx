@@ -1,18 +1,15 @@
 import React, { ReactElement, useEffect, useState } from 'react'
 import './style.scss';
-import { Package } from './type';
 import { Steps } from 'antd';
-import { PieChartOutlined, DollarCircleOutlined, CheckCircleOutlined } from '@ant-design/icons'
+import { DollarCircleOutlined, CheckCircleOutlined } from '@ant-design/icons'
 import OrderPaidment from './OrderPaidment';
-import { Link } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../redux/store/store';
+import { useAppDispatch } from '../../redux/store/store';
 import { getPackage } from '../../redux/package/packageSlice';
 
 
 export default function OrderPage(): ReactElement {
-
+  
   const [current, setCurrent] = useState(0);
-  const packageArr = useAppSelector((state) => state.package.data) as Package[];
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(getPackage());

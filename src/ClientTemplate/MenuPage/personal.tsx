@@ -13,6 +13,7 @@ import { handleFormatDateStart, FIRST_MONDAY, RECENT_MONDAY, LAST_FRIDAY } from 
 import { getAllOrder } from '../../redux/order/orderSlice';
 import { Order } from '../OrderPage/type';
 import { Link, useNavigate } from 'react-router-dom';
+import { totalAction } from '../../redux/total/totalSlice';
 
 export default function PersonalMenu() {
 
@@ -126,7 +127,7 @@ export default function PersonalMenu() {
                 }
             }
         }
-        localStorage.setItem('order', JSON.stringify({ total: nextTotal }))
+        dispatch(totalAction(nextTotal))
     }
 
     useEffect(() => {

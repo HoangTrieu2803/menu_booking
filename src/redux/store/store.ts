@@ -6,6 +6,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import userSlice from "../user/userSlice";
 import packageSlice from "../package/packageSlice";
 import orderSlice from "../order/orderSlice";
+import totalSlice from "../total/totalSlice";
 
 export const store = configureStore({
   reducer: {
@@ -15,6 +16,7 @@ export const store = configureStore({
     login : loginSlice,
     signup: userSlice,
     order : orderSlice,
+    total : totalSlice
   },
 });
 

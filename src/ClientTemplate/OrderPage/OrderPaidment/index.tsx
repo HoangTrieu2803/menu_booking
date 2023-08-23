@@ -6,7 +6,6 @@ import { useAppDispatch, useAppSelector } from '../../../redux/store/store'
 import { postOrder } from '../../../redux/order/orderSlice'
 import { getMenu } from '../../../redux/menus/menuSlice'
 import { MenuOrder } from '../../MenuPage/type'
-import { lightFormat } from 'date-fns'
 import Paypal from './Paypal'
 import { handleFormatDateStart, numberFormat,  } from '../../../Funtional'
 
@@ -16,13 +15,16 @@ export default function OrderPaidment(props: { nextCurrent: any }) {
     const dispatch = useAppDispatch();
     const user = JSON.parse(localStorage.getItem('user') as any)
     const currentDate = new Date();
-    const detail = JSON.parse(localStorage.getItem('order') as any);
     const menuUser = useAppSelector((state) => state.menu.data) as MenuOrder[];
+    const total = useAppSelector((state)=> state.total.total)
+
+    console.log(total)
     const [checkOut,setCheckOut] = useState(false);
     const [isPaid, setIsPaid] = useState('');
 
     useEffect(()=>{
         dispatch(getMenu(user._id));
+        total === 0 && window.location.replace('/')
     },[])
     const handleTest = (test:string) =>{
         setIsPaid(test)
@@ -37,7 +39,7 @@ export default function OrderPaidment(props: { nextCurrent: any }) {
         addressNote: '',
         timeStart: currentDate,
         menuOrder:[] ,
-        cost: detail.total,
+        cost: total,
         userId: user._id
     })
 
@@ -80,7 +82,7 @@ export default function OrderPaidment(props: { nextCurrent: any }) {
                         <div className="col-md-6">
                             <div className='form-group mt-md-4'>
                                 <div className="order-detail-content">
-                                    <h5>Tổng giá trị thực đơn - {numberFormat(detail.total)}đ</h5>
+                                    <h5>Tổng giá trị thực đơn - {numberFormat(total)}đ</h5>
                                 </div>
                             </div>
                             <div className="form-group mt-md-4">

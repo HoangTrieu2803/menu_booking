@@ -32,3 +32,7 @@ export interface OrderState{
     data: Order[];
     error : string;
 }
+
+export interface TotalState{
+    total: number
+}
