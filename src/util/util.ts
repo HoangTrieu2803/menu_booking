@@ -1,7 +1,7 @@
 import axios from "axios"
 
 const api = axios.create({
-    baseURL:`http://localhost:8000/v1`
+    baseURL:`https://menu-api-gamma.vercel.app/v1`
 })
 
 export default api
